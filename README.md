@@ -23,3 +23,5 @@ rosrun openpose_wrapper openpose_wrapper_node
 - clean msgs files 
 
 
+# Author
+Minkyu Kim (steveminq@utexas.edu)
