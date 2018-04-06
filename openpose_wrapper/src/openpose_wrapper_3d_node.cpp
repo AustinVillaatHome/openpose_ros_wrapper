@@ -529,13 +529,9 @@ int main(int argc, char *argv[])
 		auto ret = wrapper.process(cv_ptr->image);
 		if ( ret )
 		{
-			ROS_INFO("Openpose returned...");
 			workConsumer(ret);
 		}
-		else
-		{
-			break;
-		}
+		cv_ptr = nullptr;
 	}
 
 	wrapper.stop();
