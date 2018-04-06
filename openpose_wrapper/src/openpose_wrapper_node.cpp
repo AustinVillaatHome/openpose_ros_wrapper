@@ -59,11 +59,9 @@ class MyPublisher
 {
 	public:
 	MyPublisher(void);
-	ros::Publisher publisher;
 	ros::Publisher image_skeleton_pub;
 	ros::Publisher pose_pub;
 	void callback(const op::Array<float>&);
-	std_msgs::Float32MultiArray msg;
 };
 
 pthread_mutex_t buf_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -187,7 +185,6 @@ MyPublisher::MyPublisher(void)
 void MyPublisher::callback(const op::Array<float> &poseKeypoints)
 {
     ros::Time t = ros::Time::now();
-//	openpose_wrapper::OpenPose msg;
     openpose_ros_wrapper_msgs::Persons persons;
     persons.rostime = t;
     persons.image_w = 640;
@@ -213,64 +210,8 @@ void MyPublisher::callback(const op::Array<float> &poseKeypoints)
     pose_pub.publish(persons);
 
 
-	int numHuman = poseKeypoints.getSize(0);
-	int numPart  = poseKeypoints.getSize(1);
-	int numInfo  = poseKeypoints.getSize(2);
-
-	mp.msg.layout.dim.clear();
-	mp.msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
-	mp.msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
-	mp.msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
-	mp.msg.layout.dim[0].size = numHuman;
-	mp.msg.layout.dim[0].stride = numPart*numInfo;
-	mp.msg.layout.dim[0].label = "human";
-	mp.msg.layout.dim[1].size = numPart;
-	mp.msg.layout.dim[1].stride = numInfo;
-	mp.msg.layout.dim[1].label = "body";
-	mp.msg.layout.dim[2].size = numInfo;
-	mp.msg.layout.dim[2].stride = 1;
-	mp.msg.layout.dim[2].label = "info";
-	mp.msg.data.resize(numHuman*numPart*numInfo);
-
-	op::log("DIM " + std::to_string(numHuman) + std::to_string(numPart) + std::to_string(numInfo));
-	for (auto person = 0 ; person < poseKeypoints.getSize(0) ; person++)
-	{
-//		openpose_wrapper::Human human;
-		op::log("Person " + std::to_string(person) + ": (x, y, score):");
-		for (auto bodyPart = 0 ; bodyPart < poseKeypoints.getSize(1) ; bodyPart++)
-		{
-//			openpose_wrapper::Body body;
-			float x, y, p;
-
-			x = poseKeypoints[{person, bodyPart, 0}];
-			y = poseKeypoints[{person, bodyPart, 1}];
-			p = poseKeypoints[{person, bodyPart, 2}];
-
-//			if ( p == 0 )
-//				continue;
-
-//			body.type = bodyPart + 1;
-//			body.x = x, body.y = y, body.p = p;
-//			human.bodies.push_back(body);
-#if 0
-			mp.msg[{person, bodyPart, 0}] = x;
-			mp.msg[{person, bodyPart, 1}] = y;
-			mp.msg[{person, bodyPart, 2}] = p;
-#else
-			mp.msg.data[person*numPart*numInfo + bodyPart*numInfo + 0 ] = x;
-			mp.msg.data[person*numPart*numInfo + bodyPart*numInfo + 1 ] = y;
-			mp.msg.data[person*numPart*numInfo + bodyPart*numInfo + 2 ] = p;
-#endif
-		}
-//		human.numBody = human.bodies.size();
-//		msg.humans.push_back(human);
-	}
-//	msg.numHuman = msg.humans.size();
-	publisher.publish(mp.msg);
-
     //publish image
-    sensor_msgs::Image ros_image;
-    out_msg.encoding =sensor_msgs::image_encodings::RGB8;
+    out_msg.encoding =sensor_msgs::image_encodings::BGR8;
     image_skeleton_pub.publish(out_msg.toImageMsg());
 }
 
@@ -283,13 +224,16 @@ int main(int argc, char *argv[])
 
 	ros::start();
 //	mp.publisher = nh.advertise<openpose_wrapper::OpenPose>("openpose_human_body", 1000);
-	mp.publisher = nh.advertise<std_msgs::Float32MultiArray>("openpose_human_body", 1000);
+//	mp.publisher = nh.advertise<std_msgs::Float32MultiArray>("openpose_human_body", 1000);
     mp.image_skeleton_pub = nh.advertise<sensor_msgs::Image>( "/openpose_ros/detected_poses_image", 1 );  
     mp.pose_pub = nh.advertise<openpose_ros_wrapper_msgs::Persons>("/openpose/pose", 2);
 	ros::Subscriber subscriber = nh.subscribe( FLAGS_image_dir, 1, callback);
 	//ros::Subscriber subscriber = nh.subscribe( FLAGS_image_dir, 1, callback);
 	cout << "Subscribed" << endl;
 
+//	FLAGS_body_disable = true;
+	FLAGS_face = true;
+//	FLAGS_hand = true;
 	OpenposeWrapper wrapper;
 
 
