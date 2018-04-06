@@ -13,7 +13,7 @@ rosrun openpose_wrapper openpose_wrapper_node
 ## run openpose_ros_3d
 
 ```
-rosrun openpose_wrapper openpose_wrapper_node
+rosrun openpose_wrapper openpose_wrapper_3d_node
 ```
 
 # Todo 
