@@ -1,0 +1,4 @@
+sensor_msgs/Image image
+---
+openpose_ros_wrapper_msgs/Persons persons
+

@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  sensor_msgs
   geometry_msgs
   message_generation
 )
@@ -24,11 +25,16 @@ add_message_files(
   Persons3d.msg
 )
 
+add_service_files(
+  FILES
+  GetPersons.srv
+)
+
 generate_messages(
-  DEPENDENCIES std_msgs geometry_msgs
+  DEPENDENCIES std_msgs geometry_msgs sensor_msgs
 )
 
 catkin_package(
-  CATKIN_DEPENDS message_generation message_runtime geometry_msgs
+  CATKIN_DEPENDS message_generation message_runtime geometry_msgs sensor_msgs
 )
 
