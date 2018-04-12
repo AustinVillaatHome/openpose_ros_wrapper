@@ -60,6 +60,7 @@ DECLARE_string(write_heatmaps_format);
 DECLARE_string(write_keypoint);
 DECLARE_string(write_keypoint_format);
 DECLARE_string(write_keypoint_json);
+DECLARE_bool(publish_images);
 
 struct UserDatum : public op::Datum
 {

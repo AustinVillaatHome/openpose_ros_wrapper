@@ -54,11 +54,14 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>message_filters</build_depend>
+  <build_depend>message_runtime</build_depend>
+  <build_depend>openpose_ros_wrapper_msgs</build_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>OpenCV</exec_depend>
   <exec_depend>message_filters</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
   <exec_depend></exec_depend>
 
 

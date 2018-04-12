@@ -69,11 +69,10 @@ message(STATUS "EIGEN ${EIGEN3_INCLUDE_DIRS}")
 #)
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+#add_service_files(
+#  FILES
+#  OpenposeServer.srv
+#)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -120,7 +119,7 @@ message(STATUS "EIGEN ${EIGEN3_INCLUDE_DIRS}")
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES openpose_wrapper
- CATKIN_DEPENDS roscpp std_msgs 
+ CATKIN_DEPENDS roscpp std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -151,6 +150,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp src/wrapper.cpp)
 add_executable(${PROJECT_NAME}_3d_node src/${PROJECT_NAME}_3d_node.cpp src/wrapper.cpp)
+add_executable(openpose_server_node src/openpose_server_node.cpp src/wrapper.cpp)
 
 add_executable(${PROJECT_NAME}_nico_node src/${PROJECT_NAME}_nico_node.cpp)
 
@@ -184,6 +184,15 @@ target_link_libraries(${PROJECT_NAME}_3d_node
 )
 
 target_link_libraries(${PROJECT_NAME}_nico_node
+  ${OpenPose_LIBS}
+  ${GFLAGS_LIBRARIES}
+  ${OpenCV_LIBS}
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
+target_link_libraries(openpose_server_node
   ${OpenPose_LIBS}
   ${GFLAGS_LIBRARIES}
   ${OpenCV_LIBS}

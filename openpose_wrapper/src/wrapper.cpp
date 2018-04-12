@@ -139,6 +139,7 @@ DEFINE_string(write_keypoint_format,    "yml",          "(Deprecated, use `write
                                                         " yaml & yml. Json not available for OpenCV < 3.0, use `write_keypoint_json` instead.");
 DEFINE_string(write_keypoint_json,      "",             "(Deprecated, use `write_json`) Directory to write people pose data in JSON format,"
                                                         " compatible with any OpenCV version.");
+DEFINE_bool(publish_images,               true,          "Publish detection result image.");
 
 
 // If the user needs his own variables, he can inherit the op::Datum struct and add them
