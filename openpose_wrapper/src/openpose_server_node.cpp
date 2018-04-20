@@ -97,47 +97,47 @@ openpose_ros_wrapper_msgs::Persons MyPublisher::callback(const std::shared_ptr<s
 //			op::log("\nKeypoints for " + std::to_string(datumsPtr->at(0).index) + " :");
 			// Accesing each element of the keypoints
 			const auto& poseKeypoints = datumsPtr->at(0).poseKeypoints;
-			op::log("Person pose keypoints:");
-			for (auto person = 0 ; person < poseKeypoints.getSize(0) ; person++)
-			{
-				op::log("Person " + std::to_string(person) + " (x, y, score):");
-				for (auto bodyPart = 0 ; bodyPart < poseKeypoints.getSize(1) ; bodyPart++)
-				{
-					std::string valueToPrint;
-					for (auto xyscore = 0 ; xyscore < poseKeypoints.getSize(2) ; xyscore++)
-					{
-						valueToPrint += std::to_string(   poseKeypoints[{person, bodyPart, xyscore}]   ) + " ";
-					}
-					op::log(valueToPrint);
-				}
-			}
-			op::log(" ");
-			// Alternative: just getting std::string equivalent
-			op::log("Face keypoints: " + datumsPtr->at(0).faceKeypoints.toString());
-			op::log("Left hand keypoints: " + datumsPtr->at(0).handKeypoints[0].toString());
-			op::log("Right hand keypoints: " + datumsPtr->at(0).handKeypoints[1].toString());
+			//op::log("Person pose keypoints:");
+			//for (auto person = 0 ; person < poseKeypoints.getSize(0) ; person++)
+			//{
+				//op::log("Person " + std::to_string(person) + " (x, y, score):");
+				//for (auto bodyPart = 0 ; bodyPart < poseKeypoints.getSize(1) ; bodyPart++)
+				//{
+					//std::string valueToPrint;
+					//for (auto xyscore = 0 ; xyscore < poseKeypoints.getSize(2) ; xyscore++)
+					//{
+						//valueToPrint += std::to_string(   poseKeypoints[{person, bodyPart, xyscore}]   ) + " ";
+					//}
+					//op::log(valueToPrint);
+				//}
+			//}
+			//op::log(" ");
+             //Alternative: just getting std::string equivalent
+			//op::log("Face keypoints: " + datumsPtr->at(0).faceKeypoints.toString());
+			//op::log("Left hand keypoints: " + datumsPtr->at(0).handKeypoints[0].toString());
+			//op::log("Right hand keypoints: " + datumsPtr->at(0).handKeypoints[1].toString());
 			// Heatmaps
-			const auto& poseHeatMaps = datumsPtr->at(0).poseHeatMaps;
-			if (!poseHeatMaps.empty())
-			{
-				op::log("Pose heatmaps size: [" + std::to_string(poseHeatMaps.getSize(0)) + ", "
-						+ std::to_string(poseHeatMaps.getSize(1)) + ", "
-						+ std::to_string(poseHeatMaps.getSize(2)) + "]");
-				const auto& faceHeatMaps = datumsPtr->at(0).faceHeatMaps;
-				op::log("Face heatmaps size: [" + std::to_string(faceHeatMaps.getSize(0)) + ", "
-						+ std::to_string(faceHeatMaps.getSize(1)) + ", "
-						+ std::to_string(faceHeatMaps.getSize(2)) + ", "
-						+ std::to_string(faceHeatMaps.getSize(3)) + "]");
-				const auto& handHeatMaps = datumsPtr->at(0).handHeatMaps;
-				op::log("Left hand heatmaps size: [" + std::to_string(handHeatMaps[0].getSize(0)) + ", "
-						+ std::to_string(handHeatMaps[0].getSize(1)) + ", "
-						+ std::to_string(handHeatMaps[0].getSize(2)) + ", "
-						+ std::to_string(handHeatMaps[0].getSize(3)) + "]");
-				op::log("Right hand heatmaps size: [" + std::to_string(handHeatMaps[1].getSize(0)) + ", "
-						+ std::to_string(handHeatMaps[1].getSize(1)) + ", "
-						+ std::to_string(handHeatMaps[1].getSize(2)) + ", "
-						+ std::to_string(handHeatMaps[1].getSize(3)) + "]");
-			}
+			//const auto& poseHeatMaps = datumsPtr->at(0).poseHeatMaps;
+			//if (!poseHeatMaps.empty())
+			//{
+				//op::log("Pose heatmaps size: [" + std::to_string(poseHeatMaps.getSize(0)) + ", "
+						//+ std::to_string(poseHeatMaps.getSize(1)) + ", "
+						//+ std::to_string(poseHeatMaps.getSize(2)) + "]");
+				//const auto& faceHeatMaps = datumsPtr->at(0).faceHeatMaps;
+				//op::log("Face heatmaps size: [" + std::to_string(faceHeatMaps.getSize(0)) + ", "
+						//+ std::to_string(faceHeatMaps.getSize(1)) + ", "
+						//+ std::to_string(faceHeatMaps.getSize(2)) + ", "
+						//+ std::to_string(faceHeatMaps.getSize(3)) + "]");
+				//const auto& handHeatMaps = datumsPtr->at(0).handHeatMaps;
+				//op::log("Left hand heatmaps size: [" + std::to_string(handHeatMaps[0].getSize(0)) + ", "
+						//+ std::to_string(handHeatMaps[0].getSize(1)) + ", "
+						//+ std::to_string(handHeatMaps[0].getSize(2)) + ", "
+						//+ std::to_string(handHeatMaps[0].getSize(3)) + "]");
+				//op::log("Right hand heatmaps size: [" + std::to_string(handHeatMaps[1].getSize(0)) + ", "
+						//+ std::to_string(handHeatMaps[1].getSize(1)) + ", "
+						//+ std::to_string(handHeatMaps[1].getSize(2)) + ", "
+						//+ std::to_string(handHeatMaps[1].getSize(3)) + "]");
+			//}
 
 			const int num_people = poseKeypoints.getSize(0);
 			const int num_bodyparts = poseKeypoints.getSize(1);
@@ -159,9 +159,9 @@ openpose_ros_wrapper_msgs::Persons MyPublisher::callback(const std::shared_ptr<s
 			if ( FLAGS_publish_images )
 			{
 				//publish image
-				out_msg.image=datumsPtr->at(0).cvOutputData;
-				out_msg.encoding =sensor_msgs::image_encodings::BGR8;
-				image_skeleton_pub.publish(out_msg.toImageMsg());
+				//out_msg.image=datumsPtr->at(0).cvOutputData;
+				//out_msg.encoding =sensor_msgs::image_encodings::BGR8;
+				//image_skeleton_pub.publish(out_msg.toImageMsg());
 			}
 		}
 	}
