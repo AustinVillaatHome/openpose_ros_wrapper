@@ -33,7 +33,7 @@
 
 #include <pthread.h>
 #include <array>
-#include <openpose_wrapper/OpenPose.h>
+//#include <openpose_wrapper/OpenPose.h>
 #include <std_msgs/Float32MultiArray.h>
 #include <sensor_msgs/Image.h>
 #include <openpose_ros_wrapper_msgs/Persons.h>

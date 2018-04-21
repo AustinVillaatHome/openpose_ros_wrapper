@@ -37,7 +37,7 @@
 #include <message_filters/sync_policies/approximate_time.h>
 #include <pthread.h>
 #include <array>
-#include <openpose_wrapper/OpenPose.h>
+//#include <openpose_wrapper/OpenPose.h>
 #include <std_msgs/Float32MultiArray.h>
 #include <std_msgs/Header.h>
 #include <sensor_msgs/Image.h>
@@ -173,6 +173,8 @@ DEFINE_int32(profile_speed,             1000,           "If PROFILER_ENABLED was
                                                         " runtime statistics at this frame number.");
 // Producer
 DEFINE_string(image_dir,                "/hsrb/head_rgbd_sensor/rgb/image_raw",      "Process a directory of images. Read all standard formats (jpg, png, bmp, etc.).");
+DEFINE_double(camera_fps,               30.0,           "Frame rate for the webcam (also used when saving video). Set this value to the minimum"
+                                                        " value between the OpenPose displayed speed and the webcam real frame rate.");
 // OpenPose
 DEFINE_string(model_folder,             "/usr/share/models/",      "Folder path (absolute or relative) where the models (pose, face, ...) are located.");
 DEFINE_string(output_resolution,        "-1x-1",        "The image resolution (display and output). Use \"-1x-1\" to force the program to use the"
@@ -642,13 +644,14 @@ int openPoseTutorialWrapper2()
                                                   (float)FLAGS_hand_alpha_pose, (float)FLAGS_hand_alpha_heatmap,
                                                   (float)FLAGS_hand_render_threshold};
     // Consumer (comment or use default argument to disable any output)
-    const bool displayGui = false;
+    const auto displayMode = op::DisplayMode::NoDisplay;
     const bool guiVerbose = false;
     const bool fullScreen = false;
-    const op::WrapperStructOutput wrapperStructOutput{displayGui, guiVerbose, fullScreen, FLAGS_write_keypoint,
+    const op::WrapperStructOutput wrapperStructOutput{displayMode, guiVerbose, fullScreen, FLAGS_write_keypoint,
                                                       op::stringToDataFormat(FLAGS_write_keypoint_format),
                                                       writeJson, FLAGS_write_coco_json,
-                                                      FLAGS_write_images, FLAGS_write_images_format, FLAGS_write_video,
+                                                      FLAGS_write_images, FLAGS_write_images_format, 
+                                                      FLAGS_write_video, FLAGS_camera_fps, 
                                                       FLAGS_write_heatmaps, FLAGS_write_heatmaps_format};
     // Configure wrapper
     opWrapper.configure(wrapperStructPose, wrapperStructFace, wrapperStructHand, op::WrapperStructInput{},

@@ -33,7 +33,7 @@
 
 #include <pthread.h>
 #include <array>
-#include <openpose_wrapper/OpenPose.h>
+//#include <openpose_wrapper/OpenPose.h>
 #include <std_msgs/Float32MultiArray.h>
 #include <sensor_msgs/Image.h>
 #include <openpose_ros_wrapper_msgs/Persons.h>
@@ -97,25 +97,25 @@ openpose_ros_wrapper_msgs::Persons MyPublisher::callback(const std::shared_ptr<s
 //			op::log("\nKeypoints for " + std::to_string(datumsPtr->at(0).index) + " :");
 			// Accesing each element of the keypoints
 			const auto& poseKeypoints = datumsPtr->at(0).poseKeypoints;
-			op::log("Person pose keypoints:");
-			for (auto person = 0 ; person < poseKeypoints.getSize(0) ; person++)
-			{
-				op::log("Person " + std::to_string(person) + " (x, y, score):");
-				for (auto bodyPart = 0 ; bodyPart < poseKeypoints.getSize(1) ; bodyPart++)
-				{
-					std::string valueToPrint;
-					for (auto xyscore = 0 ; xyscore < poseKeypoints.getSize(2) ; xyscore++)
-					{
-						valueToPrint += std::to_string(   poseKeypoints[{person, bodyPart, xyscore}]   ) + " ";
-					}
-					op::log(valueToPrint);
-				}
-			}
-			op::log(" ");
-			// Alternative: just getting std::string equivalent
-			op::log("Face keypoints: " + datumsPtr->at(0).faceKeypoints.toString());
-			op::log("Left hand keypoints: " + datumsPtr->at(0).handKeypoints[0].toString());
-			op::log("Right hand keypoints: " + datumsPtr->at(0).handKeypoints[1].toString());
+			//op::log("Person pose keypoints:");
+			//for (auto person = 0 ; person < poseKeypoints.getSize(0) ; person++)
+			//{
+				//op::log("Person " + std::to_string(person) + " (x, y, score):");
+				//for (auto bodyPart = 0 ; bodyPart < poseKeypoints.getSize(1) ; bodyPart++)
+				//{
+					//std::string valueToPrint;
+					//for (auto xyscore = 0 ; xyscore < poseKeypoints.getSize(2) ; xyscore++)
+					//{
+						//valueToPrint += std::to_string(   poseKeypoints[{person, bodyPart, xyscore}]   ) + " ";
+					//}
+					//op::log(valueToPrint);
+				//}
+			//}
+			//op::log(" ");
+             //Alternative: just getting std::string equivalent
+			//op::log("Face keypoints: " + datumsPtr->at(0).faceKeypoints.toString());
+			//op::log("Left hand keypoints: " + datumsPtr->at(0).handKeypoints[0].toString());
+			//op::log("Right hand keypoints: " + datumsPtr->at(0).handKeypoints[1].toString());
 			// Heatmaps
 			const auto& poseHeatMaps = datumsPtr->at(0).poseHeatMaps;
 			if (!poseHeatMaps.empty())
@@ -202,6 +202,8 @@ bool add(openpose_ros_wrapper_msgs::GetPersons::Request &req, openpose_ros_wrapp
 int main(int argc, char *argv[])
 {
     gflags::ParseCommandLineFlags(&argc, &argv, true);
+
+    //FLAGS_publish_images = false;
 
 	ros::init(argc, argv, "openpose_server");
 	ros::NodeHandle nh;

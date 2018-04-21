@@ -14,7 +14,7 @@
 #include <message_filters/sync_policies/approximate_time.h>
 #include <pthread.h>
 #include <array>
-#include <openpose_wrapper/OpenPose.h>
+//#include <openpose_wrapper/OpenPose.h>
 #include <std_msgs/Float32MultiArray.h>
 #include <std_msgs/Header.h>
 #include <sensor_msgs/Image.h>
