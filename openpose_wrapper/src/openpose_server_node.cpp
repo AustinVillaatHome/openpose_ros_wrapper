@@ -117,27 +117,27 @@ openpose_ros_wrapper_msgs::Persons MyPublisher::callback(const std::shared_ptr<s
 			//op::log("Left hand keypoints: " + datumsPtr->at(0).handKeypoints[0].toString());
 			//op::log("Right hand keypoints: " + datumsPtr->at(0).handKeypoints[1].toString());
 			// Heatmaps
-			const auto& poseHeatMaps = datumsPtr->at(0).poseHeatMaps;
-			if (!poseHeatMaps.empty())
-			{
-				op::log("Pose heatmaps size: [" + std::to_string(poseHeatMaps.getSize(0)) + ", "
-						+ std::to_string(poseHeatMaps.getSize(1)) + ", "
-						+ std::to_string(poseHeatMaps.getSize(2)) + "]");
-				const auto& faceHeatMaps = datumsPtr->at(0).faceHeatMaps;
-				op::log("Face heatmaps size: [" + std::to_string(faceHeatMaps.getSize(0)) + ", "
-						+ std::to_string(faceHeatMaps.getSize(1)) + ", "
-						+ std::to_string(faceHeatMaps.getSize(2)) + ", "
-						+ std::to_string(faceHeatMaps.getSize(3)) + "]");
-				const auto& handHeatMaps = datumsPtr->at(0).handHeatMaps;
-				op::log("Left hand heatmaps size: [" + std::to_string(handHeatMaps[0].getSize(0)) + ", "
-						+ std::to_string(handHeatMaps[0].getSize(1)) + ", "
-						+ std::to_string(handHeatMaps[0].getSize(2)) + ", "
-						+ std::to_string(handHeatMaps[0].getSize(3)) + "]");
-				op::log("Right hand heatmaps size: [" + std::to_string(handHeatMaps[1].getSize(0)) + ", "
-						+ std::to_string(handHeatMaps[1].getSize(1)) + ", "
-						+ std::to_string(handHeatMaps[1].getSize(2)) + ", "
-						+ std::to_string(handHeatMaps[1].getSize(3)) + "]");
-			}
+			//const auto& poseHeatMaps = datumsPtr->at(0).poseHeatMaps;
+			//if (!poseHeatMaps.empty())
+			//{
+				//op::log("Pose heatmaps size: [" + std::to_string(poseHeatMaps.getSize(0)) + ", "
+						//+ std::to_string(poseHeatMaps.getSize(1)) + ", "
+						//+ std::to_string(poseHeatMaps.getSize(2)) + "]");
+				//const auto& faceHeatMaps = datumsPtr->at(0).faceHeatMaps;
+				//op::log("Face heatmaps size: [" + std::to_string(faceHeatMaps.getSize(0)) + ", "
+						//+ std::to_string(faceHeatMaps.getSize(1)) + ", "
+						//+ std::to_string(faceHeatMaps.getSize(2)) + ", "
+						//+ std::to_string(faceHeatMaps.getSize(3)) + "]");
+				//const auto& handHeatMaps = datumsPtr->at(0).handHeatMaps;
+				//op::log("Left hand heatmaps size: [" + std::to_string(handHeatMaps[0].getSize(0)) + ", "
+						//+ std::to_string(handHeatMaps[0].getSize(1)) + ", "
+						//+ std::to_string(handHeatMaps[0].getSize(2)) + ", "
+						//+ std::to_string(handHeatMaps[0].getSize(3)) + "]");
+				//op::log("Right hand heatmaps size: [" + std::to_string(handHeatMaps[1].getSize(0)) + ", "
+						//+ std::to_string(handHeatMaps[1].getSize(1)) + ", "
+						//+ std::to_string(handHeatMaps[1].getSize(2)) + ", "
+						//+ std::to_string(handHeatMaps[1].getSize(3)) + "]");
+			//}
 
 			const int num_people = poseKeypoints.getSize(0);
 			const int num_bodyparts = poseKeypoints.getSize(1);
@@ -159,9 +159,9 @@ openpose_ros_wrapper_msgs::Persons MyPublisher::callback(const std::shared_ptr<s
 			if ( FLAGS_publish_images )
 			{
 				//publish image
-				out_msg.image=datumsPtr->at(0).cvOutputData;
-				out_msg.encoding =sensor_msgs::image_encodings::BGR8;
-				image_skeleton_pub.publish(out_msg.toImageMsg());
+				//out_msg.image=datumsPtr->at(0).cvOutputData;
+				//out_msg.encoding =sensor_msgs::image_encodings::BGR8;
+				//image_skeleton_pub.publish(out_msg.toImageMsg());
 			}
 		}
 	}
