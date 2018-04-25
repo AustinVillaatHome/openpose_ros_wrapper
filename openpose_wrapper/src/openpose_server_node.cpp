@@ -159,9 +159,9 @@ openpose_ros_wrapper_msgs::Persons MyPublisher::callback(const std::shared_ptr<s
 			if ( FLAGS_publish_images )
 			{
 				//publish image
-				//out_msg.image=datumsPtr->at(0).cvOutputData;
-				//out_msg.encoding =sensor_msgs::image_encodings::BGR8;
-				//image_skeleton_pub.publish(out_msg.toImageMsg());
+                //out_msg.image=datumsPtr->at(0).cvOutputData;
+                //out_msg.encoding =sensor_msgs::image_encodings::BGR8;
+                //image_skeleton_pub.publish(out_msg.toImageMsg());
 			}
 		}
 	}

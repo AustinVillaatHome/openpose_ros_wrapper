@@ -32,9 +32,15 @@ DEFINE_int32(keypoint_scale,            0,              "Scaling of the (x,y) co
                                                         " with `scale_number` and `scale_gap`.");
 // OpenPose Body Pose
 DEFINE_bool(body_disable,               false,          "Disable body keypoint detection. Option only possible for faster (but less accurate) face"
-                                                        " keypoint detection.");
+                                                         " keypoint detection.");
 DEFINE_string(model_pose,               "COCO",         "Model to be used. E.g. `COCO` (18 keypoints), `MPI` (15 keypoints, ~10% faster), "
                                                         "`MPI_4_layers` (15 keypoints, even faster but less accurate).");
+DEFINE_int32(number_people_max,         -1,             "This parameter will limit the maximum number of people detected, by keeping the people with"
+                                                        " top scores. The score is based in person area over the image, body part score, as well as"
+                                                        " joint score (between each pair of connected body parts). Useful if you know the exact"
+                                                        " number of people in the scene, so it can remove false positives (if all the people have"
+                                                        " been detected. However, it might also include false negatives by removing very small or"
+                                                        " highly occluded people. -1 will keep them all.");
 DEFINE_string(net_resolution,           "-1x368",       "Multiples of 16. If it is increased, the accuracy potentially increases. If it is"
                                                         " decreased, the speed increases. For maximum speed-accuracy balance, it should keep the"
                                                         " closest aspect ratio possible to the images or videos to be processed. Using `-1` in"
@@ -88,6 +94,17 @@ DEFINE_bool(hand_tracking,              false,          "Adding hand tracking mi
                                                         " is high enough, i.e. >7 FPS per GPU) and video. This is not person ID tracking, it"
                                                         " simply looks for hands in positions at which hands were located in previous frames, but"
                                                         " it does not guarantee the same person ID among frames");
+// OpenPose 3-D Reconstruction
+DEFINE_bool(3d,                         false,          "Running OpenPose 3-D reconstruction demo: 1) Reading from a stereo camera system."
+                                                        " 2) Performing 3-D reconstruction from the multiple views. 3) Displaying 3-D reconstruction"
+                                                        " results. Note that it will only display 1 person. If multiple people is present, it will"
+                                                        " fail.");
+DEFINE_int32(3d_min_views,              -1,             "Minimum number of views required to reconstruct each keypoint. By default (-1), it will"
+                                                        " require all the cameras to see the keypoint in order to reconstruct it.");
+DEFINE_int32(3d_views,                  1,              "Complementary option to `--image_dir` or `--video`. OpenPose will read as many images per"
+                                                        " iteration, allowing tasks such as stereo camera processing (`--3d`). Note that"
+                                                        " `--camera_parameters_folder` must be set. OpenPose must find as many `xml` files in the"
+                                                        " parameter folder as this number indicates.");
 // OpenPose Rendering
 DEFINE_int32(part_to_show,              0,              "Prediction channel to visualize (default: 0). 0 for all the body parts, 1-18 for each body"
                                                         " part heat map, 19 for the background heat map, 20 for all the body part heat maps"
@@ -203,7 +220,8 @@ OpenposeWrapper::OpenposeWrapper(void):opWrapper{op::ThreadManagerMode::Asynchro
                                                   poseModel, !FLAGS_disable_blending, (float)FLAGS_alpha_pose,
                                                   (float)FLAGS_alpha_heatmap, FLAGS_part_to_show, FLAGS_model_folder,
                                                   heatMapTypes, heatMapScale, FLAGS_part_candidates,
-                                                  (float)FLAGS_render_threshold, enableGoogleLogging};
+                                                  (float)FLAGS_render_threshold, FLAGS_number_people_max,
+                                                  enableGoogleLogging, FLAGS_3d, FLAGS_3d_min_views};
     // Face configuration (use op::WrapperStructFace{} to disable it)
     const op::WrapperStructFace wrapperStructFace{FLAGS_face, faceNetInputSize,
                                                   op::flagsToRenderMode(FLAGS_face_render, FLAGS_render_pose),
