@@ -139,12 +139,12 @@ void workConsumer(const std::shared_ptr<std::vector<UserDatum>>& datumsPtr)
 	}
 }
 
-void callback(const sensor_msgs::Image &img)
+void callback(const sensor_msgs::ImageConstPtr &img)
 {
     //ROS_INFO("hello");
 	try
 	{
-		header = img.header;
+		header = img->header;
 		cv_ptr = cv_bridge::toCvCopy(img, sensor_msgs::image_encodings::BGR8);
 		//cv_ptr = cv_bridge::toCvCopy(img, sensor_msgs::image_encodings::BGR8);
 
@@ -227,9 +227,12 @@ int main(int argc, char *argv[])
 //	mp.publisher = nh.advertise<std_msgs::Float32MultiArray>("openpose_human_body", 1000);
     mp.image_skeleton_pub = nh.advertise<sensor_msgs::Image>( "/openpose_ros/detected_poses_image", 1 );  
     mp.pose_pub = nh.advertise<openpose_ros_wrapper_msgs::Persons>("/openpose/pose", 2);
-	ros::Subscriber subscriber = nh.subscribe( FLAGS_image_dir, 1, callback);
+
+    image_transport::ImageTransport it(nh);
+    image_transport::TransportHints hints("compressed", ros::TransportHints());
+    image_transport::Subscriber subscriber = it.subscribe(FLAGS_image_dir, 1, callback, ros::VoidPtr(), hints);
 	//ros::Subscriber subscriber = nh.subscribe( FLAGS_image_dir, 1, callback);
-	cout << "Subscribed" << endl;
+	cout << "Subscribed!" << endl;
 
 //	FLAGS_body_disable = true;
 	FLAGS_face = true;

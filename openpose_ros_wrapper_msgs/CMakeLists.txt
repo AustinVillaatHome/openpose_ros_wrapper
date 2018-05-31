@@ -22,6 +22,7 @@ add_message_files(
   PersonDetection.msg
   PersonDetection3d.msg
   Persons.msg
+  PersonsArray.msg
   Persons3d.msg
 )
 
