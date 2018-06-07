@@ -14,7 +14,7 @@ DEFINE_bool(disable_multi_thread,       false,          "It would slightly reduc
 DEFINE_int32(profile_speed,             1000,           "If PROFILER_ENABLED was set in CMake or Makefile.config files, OpenPose will show some"
                                                         " runtime statistics at this frame number.");
 // Producer
-DEFINE_string(image_dir,                "/hsrb/head_rgbd_sensor/rgb/image_raw",      "Process a directory of images. Read all standard formats (jpg, png, bmp, etc.).");
+DEFINE_string(image_dir,                "/hsrb/head_rgbd_sensor/rgb/image_rect_color",      "Process a directory of images. Read all standard formats (jpg, png, bmp, etc.).");
 DEFINE_double(camera_fps,               30.0,           "Frame rate for the webcam (also used when saving video). Set this value to the minimum"
                                                         " value between the OpenPose displayed speed and the webcam real frame rate.");
 // OpenPose
