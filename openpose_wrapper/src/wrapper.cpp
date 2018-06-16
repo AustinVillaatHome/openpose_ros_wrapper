@@ -41,7 +41,7 @@ DEFINE_int32(number_people_max,         -1,             "This parameter will lim
                                                         " number of people in the scene, so it can remove false positives (if all the people have"
                                                         " been detected. However, it might also include false negatives by removing very small or"
                                                         " highly occluded people. -1 will keep them all.");
-DEFINE_string(net_resolution,           "-1x368",       "Multiples of 16. If it is increased, the accuracy potentially increases. If it is"
+DEFINE_string(net_resolution,           "-1x256",       "Multiples of 16. If it is increased, the accuracy potentially increases. If it is"
                                                         " decreased, the speed increases. For maximum speed-accuracy balance, it should keep the"
                                                         " closest aspect ratio possible to the images or videos to be processed. Using `-1` in"
                                                         " any of the dimensions, OP will choose the optimal aspect ratio depending on the user's"
