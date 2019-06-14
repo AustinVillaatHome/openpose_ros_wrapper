@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "openpose_server");
     ros::NodeHandle nh;
 
-    ros::start();
+    //ros::start();
 
     mp = new MyPublisher;
 
@@ -244,8 +244,9 @@ int main(int argc, char *argv[])
     // TODO: Using compressed stream breaks this
     // perhaps opencv incompatibility
     image_transport::ImageTransport it(nh);
-    image_transport::TransportHints hints("compressed", ros::TransportHints());
-    image_transport::Subscriber subscriber = it.subscribe(FLAGS_image_dir, 1, image_callback, ros::VoidPtr(), hints);
+    //image_transport::TransportHints hints("compressed", ros::TransportHints());
+    //image_transport::Subscriber subscriber = it.subscribe(FLAGS_image_dir, 1, image_callback, ros::VoidPtr(), hints);
+    image_transport::Subscriber subscriber = it.subscribe(FLAGS_image_dir, 1, image_callback);
 
     mp->server = nh.advertiseService("/openpose/GetPersons", add);
 
